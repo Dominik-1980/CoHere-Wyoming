@@ -121,6 +121,21 @@ Die Vorlage enthält das vollständige Logo **inklusive Schrift**, Ports,
 Ressourcenlimits und den eigenen Appdata-Pfad
 `/mnt/user/appdata/cohere-wyoming`. Benutzer: UID99/GID100.
 
+Für eine Neuinstallation die XML-Datei als
+`/boot/config/plugins/dockerMan/templates-user/my-cohere-wyoming.xml` ablegen.
+Danach unter **Docker → Add Container (Container hinzufügen)** die Benutzervorlage
+`cohere-wyoming` auswählen und die Konfiguration übernehmen. Eine vorhandene
+Vorlage vor dem Ersetzen sichern. DockerMan ergänzt beim Erstellen automatisch
+`net.unraid.docker.managed=dockerman`.
+
+**Bestehende CLI-/Compose-Container:** Das Ablegen der XML übernimmt einen bereits
+laufenden Container nicht nachträglich in DockerMan; er kann weiterhin unter
+**3rd Party** erscheinen. Für die Übernahme zunächst seine Konfiguration sichern
+und ihn über die Unraid-Vorlage neu anlegen. Modell-/Appdata-Mount und Portzuordnung
+beibehalten. Den bisherigen Container vor Wiederverwendung von Name und Ports
+stoppen und erst nach erfolgreicher Prüfung des Ersatzes entfernen. Modell und
+Appdata behalten. Das allgemeine Docker-/Compose-Image setzt kein DockerMan-Label.
+
 Für den ersten Download eine private, für UID99/GID100 lesbare Datei
 `/mnt/user/appdata/cohere-wyoming/hf_token` anlegen.
 Appdata wird nach `/data` gemountet; die Vorlage setzt

@@ -119,6 +119,20 @@ Import [unraid/cohere-wyoming.xml](unraid/cohere-wyoming.xml). The template incl
 the complete project logo **with its lettering**, ports, CPU/RAM limits and a
 separate `/mnt/user/appdata/cohere-wyoming` path. It uses UID99/GID100.
 
+For a new installation, save the XML as
+`/boot/config/plugins/dockerMan/templates-user/my-cohere-wyoming.xml`, then use
+**Docker → Add Container**, select the `cohere-wyoming` user template and apply
+the configuration. Back up an existing template before replacing it.
+DockerMan adds `net.unraid.docker.managed=dockerman` when it creates the container.
+
+**Existing CLI/Compose containers:** copying the XML onto the server does not
+adopt an already running container into DockerMan; it can still show **3rd Party**.
+To move it into DockerMan, save its current configuration and recreate it through
+the Unraid template, preserving its model/appdata mount and port mappings.
+Stop the previous container before reusing its name and ports. Remove the old
+container only after the replacement is healthy; keep the model/appdata files.
+The generic Docker/Compose image does not declare itself DockerMan-managed.
+
 For the initial gated download, create a private token file at
 `/mnt/user/appdata/cohere-wyoming/hf_token`, readable by UID99/GID100.
 The template mounts appdata at `/data` and sets `HF_TOKEN_PATH=/data/hf_token`.
