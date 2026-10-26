@@ -1,0 +1,14 @@
+{
+  "repo": "CohereLabs/cohere-transcribe-03-2026",
+  "revision": "d552dadc2922ba6f6c1f994f8db904d52dcaf942",
+  "license": "Apache-2.0",
+  "model_type": "cohere_asr",
+  "weights": {
+    "file": "model.safetensors",
+    "bytes": 4131862976,
+    "sha256": "987bd3e141c7bfdb5a78f5db11397ee7737308357e6cc0a3f36a4979b158137a"
+  },
+  "languages": ["ar", "de", "el", "en", "es", "fr", "it", "ja", "ko", "nl", "pl", "pt", "vi", "zh"],
+  "source": "https://huggingface.co/api/models/CohereLabs/cohere-transcribe-03-2026?blobs=true",
+  "verified_on": "2026-10-26"
+}

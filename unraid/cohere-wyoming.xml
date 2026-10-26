@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>cohere-wyoming</Name>
+  <Repository>ghcr.io/dominik-1980/cohere-wyoming:0.1.0</Repository>
+  <Registry>https://github.com/Dominik-1980/CoHere-Wyoming/pkgs/container/cohere-wyoming</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/Dominik-1980/CoHere-Wyoming/issues</Support>
+  <Project>https://github.com/Dominik-1980/CoHere-Wyoming</Project>
+  <Overview>Local unquantized Cohere Transcribe speech-to-text over Wyoming. CPU float32, German default, 14 languages. First download requires access to the official Hugging Face model and a private read-token file at /data/hf_token. Model cache persists in /data. No GPU or Cohere API required. See the project README for setup and licensing.</Overview>
+  <Category>HomeAutomation: Tools:AI:</Category>
+  <WebUI>http://[IP]:[PORT:10301]/docs</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/Dominik-1980/CoHere-Wyoming/main/unraid/cohere-wyoming.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/Dominik-1980/CoHere-Wyoming/main/assets/logo.png</Icon>
+  <ExtraParams>--user=99:100 --memory=16g --cpus=6 --cap-drop=ALL --security-opt=no-new-privileges --read-only --tmpfs /tmp:rw,nosuid,size=512m</ExtraParams>
+  <Config Name="Wyoming port" Target="10300" Default="10324" Mode="tcp" Description="Wyoming STT" Type="Port" Display="always" Required="true" Mask="false">10324</Config>
+  <Config Name="HTTP port" Target="10301" Default="10325" Mode="tcp" Description="Health and API docs" Type="Port" Display="always" Required="true" Mask="false">10325</Config>
+  <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/cohere-wyoming" Mode="rw" Description="Model cache; writable by UID99/GID100" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/cohere-wyoming</Config>
+  <Config Name="Language" Target="LANGUAGE" Default="de" Mode="" Description="ar de el en es fr it ja ko nl pl pt vi zh" Type="Variable" Display="always" Required="true" Mask="false">de</Config>
+  <Config Name="CPU threads" Target="OMP_NUM_THREADS" Default="6" Mode="" Description="OpenMP CPU threads" Type="Variable" Display="advanced" Required="true" Mask="false">6</Config>
+  <Config Name="MKL threads" Target="MKL_NUM_THREADS" Default="6" Mode="" Description="MKL CPU threads" Type="Variable" Display="advanced" Required="true" Mask="false">6</Config>
+  <Config Name="HF token file" Target="HF_TOKEN_PATH" Default="/data/hf_token" Mode="" Description="Private Hugging Face read-token file; never enter the token itself here" Type="Variable" Display="always" Required="true" Mask="false">/data/hf_token</Config>
+  <Config Name="Download model" Target="MODEL_DOWNLOAD" Default="1" Mode="" Description="1: official download/cache; 0: validate existing local checkpoint only" Type="Variable" Display="advanced" Required="true" Mask="false">1</Config>
+</Container>

@@ -1,0 +1,26 @@
+CoHere-Wyoming
+Copyright (c) 2026 Dominik Weiland
+
+Community integration and packaging; not an official Cohere, Home Assistant,
+or Open Home Foundation product. Cohere and Home Assistant names and marks
+remain the property of their respective owners. No endorsement is implied.
+
+Agent CLI 0.112.0 by Bas Nijholt, MIT license:
+https://github.com/basnijholt/agent-cli/tree/654b4773ed2c2b0b5048adc8239a8c64f33d6fb0
+Copyright (c) 2025 Bas Nijholt.
+Build-time changes are recorded in patch_backend.py and in modified source
+headers: native local Cohere architecture detection, disabled remote Python,
+accurate Wyoming descriptions/languages, and suppressed transcript logging.
+Its complete MIT license is retained in licenses/agent-cli-MIT.txt.
+
+Wyoming by Michael Hansen and contributors:
+https://github.com/OHF-Voice/wyoming
+The installed dependency retains its MIT license in its wheel metadata.
+
+Cohere Transcribe 03-2026 by Cohere Labs, Apache License 2.0:
+https://huggingface.co/CohereLabs/cohere-transcribe-03-2026
+Model weights are NOT distributed in this repository or container image.
+Users obtain the pinned official model themselves, subject to its access
+conditions. Source identifiers and the weight hash are in model-manifest.json.
+A copy of Apache License 2.0 is supplied in licenses/Apache-2.0.txt.
+

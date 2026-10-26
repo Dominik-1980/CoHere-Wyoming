@@ -1,0 +1,25 @@
+services:
+  cohere-wyoming:
+    image: ghcr.io/dominik-1980/cohere-wyoming:0.1.0
+    container_name: cohere-wyoming
+    user: "${PUID:-1000}:${PGID:-1000}"
+    ports:
+      - "10324:10300"
+      - "10325:10301"
+    environment:
+      LANGUAGE: "${LANGUAGE:-de}"
+      OMP_NUM_THREADS: "${CPU_THREADS:-6}"
+      MKL_NUM_THREADS: "${CPU_THREADS:-6}"
+      MODEL_DOWNLOAD: "${MODEL_DOWNLOAD:-1}"
+    volumes:
+      - cohere-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,size=512m
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 16g
+    cpus: 6
+    restart: unless-stopped
+volumes:
+  cohere-data:

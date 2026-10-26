@@ -1,0 +1,67 @@
+name: Test and publish
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Verify public source contents
+        run: python3 scripts/verify_release.py
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          load: true
+          tags: cohere-wyoming:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Test installed runtime without network or model weights
+        run: docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,size=256m --entrypoint python -v "$PWD/tests:/tests:ro" cohere-wyoming:ci -m unittest discover -s /tests -v
+      - name: Check entrypoint and Compose
+        run: |
+          docker run --rm --network none --entrypoint sh cohere-wyoming:ci -n /app/entrypoint.sh
+          docker compose config --quiet
+  publish:
+    if: startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - name: Image version
+        id: image
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          version="${RELEASE_TAG#v}"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          sbom: true
+          provenance: mode=max
+          cache-from: type=gha
+          tags: |
+            ghcr.io/dominik-1980/cohere-wyoming:${{ steps.image.outputs.version }}
+            ghcr.io/dominik-1980/cohere-wyoming:latest
+          build-args: |
+            VERSION=${{ steps.image.outputs.version }}
+            VCS_REF=${{ github.sha }}

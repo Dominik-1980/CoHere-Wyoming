@@ -1,0 +1,8 @@
+# Optional first-download override. The token file stays outside the image/Git.
+services:
+  cohere-wyoming:
+    secrets:
+      - hf_token
+secrets:
+  hf_token:
+    file: ./secrets/hf_token
