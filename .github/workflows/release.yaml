@@ -22,7 +22,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Test installed runtime without network or model weights
-        run: docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,size=256m --entrypoint python -v "$PWD/tests:/tests:ro" cohere-wyoming:ci -m unittest discover -s /tests -v
+        run: |
+          docker run --rm --network none --read-only --tmpfs /tmp:rw,nosuid,size=256m --tmpfs /data:rw,uid=1000,gid=1000,size=256m --entrypoint python -v "$PWD/tests:/tests:ro" cohere-wyoming:ci -m unittest discover -s /tests -v
+          docker run --rm --network none --read-only --user 99:100 --tmpfs /tmp:rw,nosuid,size=256m --tmpfs /data:rw,uid=99,gid=100,size=256m --entrypoint python cohere-wyoming:ci -c 'from transformers import AutoConfig, AutoModelForSpeechSeq2Seq, AutoProcessor; assert AutoConfig.for_model("cohere_asr").model_type == "cohere_asr"'
       - name: Check entrypoint and Compose
         run: |
           docker run --rm --network none --entrypoint sh cohere-wyoming:ci -n /app/entrypoint.sh

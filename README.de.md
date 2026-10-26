@@ -162,7 +162,7 @@ Quellpatches und echte installierte Wyoming-Metadaten ohne Modelldownload.
 Modellinferenz wird separat geprüft. Persönliche Aufnahmen und Transkripte
 gehören nicht ins Repository.
 
-Tags veröffentlichen `ghcr.io/dominik-1980/cohere-wyoming:0.1.0` und
+Tags veröffentlichen `ghcr.io/dominik-1980/cohere-wyoming:0.1.1` und
 `:latest` mit SBOM und Build-Herkunft. Siehe [CHANGELOG](CHANGELOG.md).
 Direkte Laufzeitversionen und Modellrevision sind festgelegt; transitive
 Pakete und das Basisimage können sich beim Neubau ändern.

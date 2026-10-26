@@ -35,6 +35,12 @@ class PatchSafetyTests(unittest.TestCase):
 
 @unittest.skipUnless(find_spec("agent_cli"), "Runs against installed image runtime in CI")
 class InstalledRuntimeTests(unittest.TestCase):
+    def test_native_transformers_import_works_as_container_user(self):
+        from transformers import AutoConfig, AutoModelForSpeechSeq2Seq, AutoProcessor
+        self.assertEqual(AutoConfig.for_model("cohere_asr").model_type, "cohere_asr")
+        self.assertIsNotNone(AutoModelForSpeechSeq2Seq)
+        self.assertIsNotNone(AutoProcessor)
+
     def test_wyoming_describe_reports_cohere_and_model_languages(self):
         from agent_cli.server.whisper.wyoming_handler import WyomingWhisperHandler
         from wyoming.info import Info

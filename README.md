@@ -161,7 +161,7 @@ drift detection and actual installed Wyoming metadata without downloading weight
 Model inference is a separate integration check; personal recordings and
 transcripts are excluded from the repository.
 
-Tagged releases publish `ghcr.io/dominik-1980/cohere-wyoming:0.1.0` and
+Tagged releases publish `ghcr.io/dominik-1980/cohere-wyoming:0.1.1` and
 `:latest` with an SBOM and build provenance. See [CHANGELOG](CHANGELOG.md).
 Pinned direct runtime versions are in `requirements.txt` and the Dockerfile;
 transitive packages and the base image can change on rebuild, so retain the

@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
+export HF_TOKEN_PATH="${HF_TOKEN_PATH:-/run/secrets/hf_token}"
 case "${LANGUAGE:-de}" in
   ar|de|el|en|es|fr|it|ja|ko|nl|pl|pt|vi|zh) ;;
   *) echo 'Unsupported LANGUAGE; see model-manifest.json' >&2; exit 1 ;;

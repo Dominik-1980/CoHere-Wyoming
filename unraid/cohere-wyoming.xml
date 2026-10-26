@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
   <Name>cohere-wyoming</Name>
-  <Repository>ghcr.io/dominik-1980/cohere-wyoming:0.1.0</Repository>
+  <Repository>ghcr.io/dominik-1980/cohere-wyoming:0.1.1</Repository>
   <Registry>https://github.com/Dominik-1980/CoHere-Wyoming/pkgs/container/cohere-wyoming</Registry>
   <Network>bridge</Network>
   <MyIP/>

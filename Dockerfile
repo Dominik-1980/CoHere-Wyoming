@@ -1,5 +1,5 @@
 FROM python:3.11-slim-bookworm
-ARG VERSION=0.1.0
+ARG VERSION=0.1.1
 ARG VCS_REF=unknown
 LABEL org.opencontainers.image.title="CoHere-Wyoming" \
       org.opencontainers.image.description="Local Cohere Transcribe speech recognition over Wyoming" \
@@ -12,7 +12,8 @@ LABEL org.opencontainers.image.title="CoHere-Wyoming" \
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 HF_HOME=/data/hf \
     HF_HUB_DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 NUMBA_CACHE_DIR=/data/numba \
     OMP_NUM_THREADS=6 MKL_NUM_THREADS=6 LANGUAGE=de MODEL_DIR=/data/model \
-    MODEL_DOWNLOAD=1 HF_TOKEN_PATH=/run/secrets/hf_token HOME=/data
+    MODEL_DOWNLOAD=1 HOME=/data USER=cohere LOGNAME=cohere \
+    TORCH_HOME=/data/torch TORCHINDUCTOR_CACHE_DIR=/data/torch/inductor
 RUN apt-get update && apt-get install -y --no-install-recommends libsndfile1 \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
